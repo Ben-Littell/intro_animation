@@ -14,7 +14,9 @@ COLORS = [RED, GREEN, BLUE, BLACK]
 PI = math.pi
 
 # Game Constants
-SIZE = (700, 500)
+WIDTH = 700
+LENGTH = 500
+SIZE = (WIDTH, LENGTH)
 FPS = 60
 
 ##############################################################################
@@ -27,6 +29,12 @@ pygame.display.set_caption('Animation Intro')
 
 clock = pygame.time.Clock()
 
+# loop variables
+rect_x = 50
+x_velocity = 5
+rect_y = 50
+y_velocity = 3
+rect_side = 50
 running = True
 # game loop
 while running:
@@ -35,8 +43,16 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    screen.fill(WHITE)
+    if rect_x + rect_side > WIDTH or rect_x < 0:
+        x_velocity *= -1
 
+    if rect_y + rect_side > LENGTH or rect_y < 0:
+        y_velocity *= -1
+
+    screen.fill(WHITE)
+    pygame.draw.rect(screen, RED, [rect_x, rect_y, rect_side, rect_side])
+    rect_x += x_velocity
+    rect_y += y_velocity
     pygame.display.flip()
 
     clock.tick(FPS)
